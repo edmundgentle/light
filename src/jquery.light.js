@@ -53,6 +53,9 @@
 					img.css({'max-width':w,'max-height':h,'width':'auto','height':'auto'})
 					di.width(di.children().first().width());
 					di.height(di.children().first().height());
+					if(t.attr('data-caption')!==undefined) {
+						di.append('<div class="light_caption"><div class="light_caption_inner">'+t.attr('data-caption')+'</div></div>');
+					}
 				});
 			});
 		}

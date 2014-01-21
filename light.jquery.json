@@ -1,7 +1,7 @@
 {
     "name": "light",
     "title": "Light",
-    "description": "A super lightweight lightbox plugin for images in jQuery. More development to follow soon, including captions and galleries.",
+    "description": "A super lightweight lightbox plugin for images in jQuery. More development to follow soon, including support for galleries.",
     "keywords": [
         "lightbox",
         "images",
