@@ -2,13 +2,20 @@
 	var methods = {
 		init : function( options ) { 
 			var settings = $.extend( {
-				
+				unbind:true,
+				prevText:'Previous',
+				nextText:'Next',
+				loadText:'Loading...',
+				keyboard:true
 			}, options);
-			this.click(function(e) {
+			if(settings.unbind) {
+				$(this).unbind('click');
+			}
+			$(this).click(function(e) {
 				var t=$(this);
 				var url=t.attr('href');
 				e.preventDefault();
-				var div = $('<div></div>').addClass('light_container').html('<span class="light_inner"><div class="light_loading">Loading...</div></span><a href="javascript:;" class="light_close">x</a>');
+				var div = $('<div></div>').addClass('light_container').html('<span class="light_inner"><div class="light_loading">'+settings.loadText+'</div></span><a href="javascript:;" class="light_close">x</a>');
 				var di=div.find('.light_inner');
 				$('body').append(div);
 				di.width(di.children().first().width());
@@ -25,7 +32,6 @@
 				html.css('height','100%');
 				window.scrollTo(scrollPosition[0], scrollPosition[1]);
 				div.click(function(e) {
-					console.log(e);
 					var ele=$(e.target);
 					var go=true;
 					while(!ele.hasClass('light_container')) {
@@ -43,8 +49,20 @@
 						html.css('overflow', html.data('previous-overflow'));
 						html.css('height','auto');
 						window.scrollTo(scrollPosition[0], scrollPosition[1]);
+						if(settings.keyboard) {
+							$(document).unbind('keydown');
+						}
 					}
 				});
+				if(settings.keyboard) {
+					$(document).unbind('keydown');
+					$(document).keydown(function(e) {
+						if(e.keyCode==27) {
+							e.preventDefault();
+							div.click();
+						}
+					});
+				}
 				var img=$('<img />').attr('src',url);
 				img.load(function() {
 					di.html(img);
@@ -55,6 +73,67 @@
 					di.height(di.children().first().height());
 					if(t.attr('data-caption')!==undefined) {
 						di.append('<div class="light_caption"><div class="light_caption_inner">'+t.attr('data-caption')+'</div></div>');
+					}
+					if(t.attr('data-gallery')!==undefined) {
+						var my_gallery=[];
+						var size=-1;
+						var ix=-1;
+						var gallery_id=t.attr('data-gallery');
+						$('[data-gallery='+gallery_id+']').each(function(index) {
+							my_gallery.push($(this));
+							size++;
+							if($(this)[0]==t[0]) {
+								ix=size;
+							}
+						});
+						if(size>0) {
+							di.append('<div class="light_nav"><a href="javascript:;" class="light_prev">'+settings.prevText+'</a><a href="javascript:;" class="light_next">'+settings.nextText+'</a></div>');
+							di.find('.light_prev').click(function(e) {
+								e.preventDefault();
+								ix--;
+								if(ix<0) {
+									ix=size;
+								}
+								div.click();
+								my_gallery[ix].click();
+							});
+							di.find('.light_next').click(function(e) {
+								e.preventDefault();
+								ix++;
+								if(ix>size) {
+									ix=0;
+								}
+								div.click();
+								my_gallery[ix].click();
+							});
+							if(settings.keyboard) {
+								$(document).unbind('keydown');
+								$(document).keydown(function(e) {
+									if(e.keyCode==27) {
+										e.preventDefault();
+										div.click();
+									}
+									if (e.keyCode == 37) { 
+										e.preventDefault();
+										ix--;
+										if(ix<0) {
+											ix=size;
+										}
+										div.click();
+										my_gallery[ix].click();
+									}
+									if (e.keyCode == 39) { 
+										e.preventDefault();
+										ix++;
+										if(ix>size) {
+											ix=0;
+										}
+										div.click();
+										my_gallery[ix].click();
+									}
+								});
+							}
+						}
 					}
 				});
 			});

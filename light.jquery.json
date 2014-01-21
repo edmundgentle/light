@@ -1,13 +1,15 @@
 {
     "name": "light",
     "title": "Light",
-    "description": "A super lightweight lightbox plugin for images in jQuery. More development to follow soon, including support for galleries.",
+    "description": "A super lightweight lightbox plugin for images in jQuery.",
     "keywords": [
         "lightbox",
         "images",
-		"preview"
+		"preview",
+		"gallery",
+		"captions"
     ],
-    "version": "0.2.0",
+    "version": "0.3.0",
     "author": {
         "name": "Edmund Gentle",
         "url": "https://github.com/edmundgentle",

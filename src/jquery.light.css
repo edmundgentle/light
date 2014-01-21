@@ -48,3 +48,39 @@
 .light_container .light_caption .light_caption_inner {
 	padding:10px;
 }
+.light_container .light_inner .light_nav {
+    display:none;
+	position: absolute;
+	top: 45%;
+	width: 100%;
+}
+.light_container .light_inner:hover .light_nav {
+    display:block;
+}
+.light_container .light_inner .light_nav .light_prev {
+    float: left;
+    border-top-right-radius:3px;
+    border-bottom-right-radius:3px;
+}
+.light_container .light_inner .light_nav .light_next {
+    float: right;
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+}
+.light_container .light_inner .light_nav a {
+    background-color: #fff;
+    background:rgba(255,255,255,0.5);
+    display:inline-block;
+    padding:10px;
+    text-decoration:none;
+    color:#000;
+    font-size:15px;
+}
+.light_container .light_inner .light_nav a:hover {
+    background:rgba(255,255,255,0.7);
+}
+@media screen and (max-width: 720px) {
+	.light_container .light_inner .light_nav {
+	    display:block !important;
+	}
+}
