@@ -6,6 +6,7 @@
 				prevText:'Previous',
 				nextText:'Next',
 				loadText:'Loading...',
+				errorText:'Image not Found',
 				keyboard:true
 			}, options);
 			if(settings.unbind) {
@@ -18,8 +19,8 @@
 				var div = $('<div></div>').addClass('light_container').html('<span class="light_inner"><div class="light_loading">'+settings.loadText+'</div></span><a href="javascript:;" class="light_close">x</a>');
 				var di=div.find('.light_inner');
 				$('body').append(div);
-				di.width(di.children().first().width());
-				di.height(di.children().first().height());
+				di.width(di.children().first().outerWidth());
+				di.height(di.children().first().outerHeight());
 				// lock scroll position, but retain settings for later
 				var scrollPosition = [
 					self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
@@ -64,13 +65,13 @@
 					});
 				}
 				var img=$('<img />').attr('src',url);
-				img.load(function() {
+				img.load(function(e) {
 					di.html(img);
 					var w=$( window ).width()-20;
 					var h=$( window ).height()-20;
 					img.css({'max-width':w,'max-height':h,'width':'auto','height':'auto'})
-					di.width(di.children().first().width());
-					di.height(di.children().first().height());
+					di.width(di.children().first().outerWidth());
+					di.height(di.children().first().outerHeight());
 					if(t.attr('data-caption')!==undefined) {
 						di.append('<div class="light_caption"><div class="light_caption_inner">'+t.attr('data-caption')+'</div></div>');
 					}
@@ -135,6 +136,11 @@
 							}
 						}
 					}
+				}).error(function() {
+					di.width(500);
+					di.html('<div class="light_error">'+settings.errorText+'</div>');
+					di.width(di.children().first().outerWidth());
+					di.height(di.children().first().outerHeight());
 				});
 			});
 		}

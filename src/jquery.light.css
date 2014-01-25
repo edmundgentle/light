@@ -28,6 +28,12 @@
 	padding:15px 30px;
 	display:inline-block;
 }
+.light_container .light_error {
+	background-color:#ffc4cb;
+	border-radius:5px;
+	padding:15px 30px;
+	display:inline-block;
+}
 .light_container .light_close {
 	width:28px;
 	height:28px;
