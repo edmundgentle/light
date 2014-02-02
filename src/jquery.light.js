@@ -12,6 +12,7 @@
 			if(settings.unbind) {
 				$(this).unbind('click');
 			}
+			var loaded_imgs=[];
 			$(this).click(function(e) {
 				var t=$(this);
 				var url=t.attr('href');
@@ -66,6 +67,15 @@
 				}
 				var img=$('<img />').attr('src',url);
 				img.load(function(e) {
+					var found=false;
+					$.each(loaded_imgs, function( index, value ) {
+						if(url==value[0]) {
+							found=true;
+						}
+					});
+					if(found===false) {
+						loaded_imgs.push([url,true]);
+					}
 					di.html(img);
 					var w=$( window ).width()-20;
 					var h=$( window ).height()-20;
@@ -137,10 +147,28 @@
 						}
 					}
 				}).error(function() {
+					var found=false;
+					$.each(loaded_imgs, function( index, value ) {
+						if(url==value[0]) {
+							found=true;
+						}
+					});
+					if(found===false) {
+						loaded_imgs.push([url,false]);
+					}
 					di.width(500);
 					di.html('<div class="light_error">'+settings.errorText+'</div>');
 					di.width(di.children().first().outerWidth());
 					di.height(di.children().first().outerHeight());
+				});
+				$.each(loaded_imgs, function( index, value ) {
+					if(url==value[0]) {
+						if(value[1]) {
+							img.load();
+						}else{
+							img.error();
+						}
+					}
 				});
 			});
 		}
