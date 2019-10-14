@@ -22,4 +22,4 @@ The available options are:
 Examples
 --------
 
-You can find all the examples live at http://www.edmundgentle.com/snippets/light/examples/
+You can find all the examples live [here](https://edmundgentle.github.io/light/examples/)
